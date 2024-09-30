@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="query">查询用户</button>
+    <button id="btn">创建单个用户</button>
+    <button id="btnBatch">创建批量用户</button>
+
+    <script>
+      document.getElementById('query').addEventListener('click', () => {
+        fetch('http://localhost:3000/api/users/getUsers?userId=5', {
+          method: 'get',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          },
+        })
+          .then((response) => response.json())
+          .catch((err) => console.log(err))
+      })
+      document.getElementById('btn').addEventListener('click', () => {
+        fetch('http://localhost:3000/api/users/createUser', {
+          method: 'post',
+          body: JSON.stringify({
+            userId: 6,
+            username: 'username6',
+            password: 'password6'
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          }
+        })
+          .then((response) => response.json())
+          .catch((err) => console.log(err))
+      })
+      document.getElementById('btnBatch').addEventListener('click', () => {
+        const userList = []
+        for (let i = 0; i < 10; i++) {
+          userList.push({
+            userId: i + 1,
+            username: `username${i + 1}`,
+            password: `password${i + 1}`
+          })
+        }
+        fetch('http://localhost:3000/api/users/createUserBatch', {
+          method: 'post',
+          body: JSON.stringify({ userList }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          }
+        })
+          .then((response) => response.json())
+          .catch((err) => console.log(err))
+      })
+    </script>
+  </body>
+</html>
