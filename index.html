@@ -12,7 +12,7 @@
 
     <script>
       document.getElementById('query').addEventListener('click', () => {
-        fetch('http://localhost:3000/api/users/getUsers?userId=5', {
+        fetch('http://localhost:3000/api/users/getUsers', {
           method: 'get',
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -25,9 +25,8 @@
         fetch('http://localhost:3000/api/users/createUser', {
           method: 'post',
           body: JSON.stringify({
-            userId: 6,
-            username: 'username6',
-            password: 'password6'
+            username: 'username3',
+            password: 'password3'
           }),
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -40,7 +39,6 @@
         const userList = []
         for (let i = 0; i < 10; i++) {
           userList.push({
-            userId: i + 1,
             username: `username${i + 1}`,
             password: `password${i + 1}`
           })
