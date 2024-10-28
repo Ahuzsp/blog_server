@@ -53,7 +53,26 @@ exports.createUser = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
-
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username, password });
+    if (user) {
+      res.status(200).json({
+        code: 0,
+        message: '登录成功',
+        data: user
+      });
+    } else {
+      res.status(200).json({
+        code: 0,
+        message: '用户名或密码错误'
+      });
+    }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}
 exports.createUserBatch = async (req, res) => {
   const { userList } = req.body;
   try {

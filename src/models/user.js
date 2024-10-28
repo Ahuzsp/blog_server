@@ -9,7 +9,12 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  createTime: {
+    type: String,
+    default: new Date().toLocaleString().replace(/\//g, '-'),
+    required: true,
+  },
 }, { versionKey: false });
 
 userSchema.plugin(AutoIncrement, { inc_field: 'userId' });

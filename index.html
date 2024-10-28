@@ -9,6 +9,8 @@
     <button id="query">查询用户</button>
     <button id="btn">创建单个用户</button>
     <button id="btnBatch">创建批量用户</button>
+    <button id="artQuery">查询文章</button>
+    <button id="addQuery">新增文章</button>
 
     <script>
       document.getElementById('query').addEventListener('click', () => {
@@ -49,6 +51,56 @@
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
           }
+        })
+          .then((response) => response.json())
+          .catch((err) => console.log(err))
+      })
+      document.getElementById('artQuery').addEventListener('click', () => {
+        fetch('http://localhost:3000/api/articles/getArticles', {
+          method: 'get',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          },
+        })
+          .then((response) => response.json())
+          .catch((err) => console.log(err))
+      })
+      document.getElementById('addQuery').addEventListener('click', () => {
+        fetch('http://localhost:3000/api/articles/createArticle', {
+          method: 'post',
+          body: JSON.stringify({
+            userId: 1,
+            userName: '失落的大陆',
+            articleTitle: 'js中常见的防抖和节流',
+            readCount: 90,
+            commentCount: 21,
+            likeCount: 33,
+            category: 1,
+            cover: 'https://i.ibb.co/C2kkP5f/deep-Clone.png',
+            abstract: 'js中常见的防抖和节流',
+            htmlContent: `<p>在前端日常开发之中，防抖和节流我们用的很多，那如何来实现一个简单的防抖和节流函数呢？</p>
+<ol>
+<li>防抖函数简单实现</li>
+</ol>
+<pre><code>	const debounce = function (fn, delay) {
+		let timer
+
+		return function (...arg) {
+			if (timer) clearTimeout(timer)
+			timer = setTimeout(() =&gt; {
+				fn.call(this, ...arg)
+				timer = null
+			}, delay)
+		}
+	}
+这就是简单的防抖函数实现
+
+</code></pre>
+`
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          },
         })
           .then((response) => response.json())
           .catch((err) => console.log(err))
