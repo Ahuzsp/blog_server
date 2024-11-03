@@ -14,6 +14,27 @@ exports.getArticles = async (req, res) => {
   }
 };
 
+exports.getArticleDetailById = async (req, res) => {
+
+  const { _id } = req.query;
+  if (!_id) {
+    return res.status(400).json({
+      code: 1,
+      message: '参数错误'
+    });
+  }
+  try {
+    const query = req.query;
+    const article = await Article.find(query);
+    res.json({
+      code: 0,
+      message: '查询成功',
+      data: article[0]
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
 exports.createArticle = async (req, res) => {
 
   // 创建新的文章对象
