@@ -134,7 +134,7 @@ exports.getUserActionList = async (req, res) => {
       articleId: { $in: likeDocs.map((item) => item.articleId) }
     })
     const followList = await User.find({
-      userId: { $in: followDocs.map((item) => item.userId) }
+      userId: { $in: followDocs.map((item) => item.followUserId) }
     })
     console.timeEnd('getUserActionList')
     res.json({
@@ -145,6 +145,38 @@ exports.getUserActionList = async (req, res) => {
         likeList,
         followList
       }
+    })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+// 修改用户信息
+exports.updateUser = async (req, res) => {
+  try {
+    const { userId } = req.body
+    if (!userId) {
+      return res.status(400).json({
+        code: 1,
+        message: '参数错误'
+      })
+    }
+    const user = await User.findOne({ userId })
+    if (!user) {
+      return res.status(400).json({
+        code: 1,
+        message: '用户不存在'
+      })
+    }
+    Object.keys(req.body).forEach((key) => {
+      if (key !== 'userId') {
+        user[key] = req.body[key]
+      }
+    })
+    await user.save()
+    res.json({
+      code: 0,
+      message: '用户信息修改成功',
+      data: user
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
