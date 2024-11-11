@@ -6,6 +6,10 @@ const articleRoutes = require('./src/routes/articleRoutes.js');
 const logRoutes = require('./src/routes/logRoutes.js');
 require('dotenv').config();
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const { uploadToImgBB } = require('./src/controllers/uploadService.js');
+
 const app = express();
 // 使用 cors 中间件
 app.use(cors());
@@ -19,7 +23,21 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
 app.use('/api/logs', logRoutes);
+app.post('/upload', upload.single('file'), async (req, res) => {
+  const file = req.file;
+  const fileName = file.originalname;
 
+  try {
+      const result = await uploadToImgBB(file.path, fileName);
+      res.status(200).json({
+        code: 0,
+        message: `图片上传成功`,
+        data: result.data
+      })
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

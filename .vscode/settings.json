@@ -1,0 +1,25 @@
+{
+	"workbench.iconTheme": "vscode-icons-mac",
+	"eslint.validate": ["javascript", "javascriptreact", "vue-html", "vue"],
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"path-intellisense.mappings": {
+		"@": "${workspaceRoot}/src"
+	},
+	"explorer.confirmDelete": false,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"bracket-pair-colorizer-2.depreciation-notice": false,
+	"diffEditor.ignoreTrimWhitespace": false,
+	"gitlens.views.branches.branches.layout": "list",
+	"editor.formatOnSave": true,
+	"files.eol": "\r\n",
+	"files.exclude": {
+		"**/node_modules": true
+	},
+	"prettier": {
+		"semi": false, // 格式化时不加分号
+		// "singleQuote": true, // 格式化时使用单引号
+		"trailingComma": "none" // 格式化时末尾不添加逗号
+	},
+	"security.workspace.trust.untrustedFiles": "open",
+	"terminal.integrated.defaultProfile.windows": "Command Prompt"
+}

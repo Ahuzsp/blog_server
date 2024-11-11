@@ -3,6 +3,7 @@ const Collect = require('../models/collect')
 const Like = require('../models/like')
 const Follow = require('../models/follow')
 const Article = require('../models/article')
+
 // $eq: 等于
 // $ne: 不等于
 // $gt: 大于
@@ -35,8 +36,9 @@ exports.createUser = async (req, res) => {
     // 检查用户名是否已存在
     const existingUser = await User.findOne({ username })
     if (existingUser) {
-      return res.status(400).json({
-        code: 1,
+      return res.status(200).json({
+        code: 0,
+        data: null,
         message: '用户名已存在'
       })
     }
@@ -94,7 +96,15 @@ exports.createUserBatch = async (req, res) => {
 exports.followUser = async (req, res) => {
   const { userId, followUserId, isFollow } = req.body
   try {
+    const existingDoc = await Collect.findOne({ userId, followUserId })
     if (isFollow) {
+      if (existingDoc) {
+        return res.status(200).json({
+          code: -1,
+          data: null,
+          message: '不能重复关注'
+        })
+      }
       const doc = new Follow({
         userId,
         followUserId,
@@ -107,7 +117,7 @@ exports.followUser = async (req, res) => {
         data: true
       })
     } else {
-      await Follow.deleteOne({ userId, followUserId })
+      await Follow.findByIdAndDelete(existingDoc._id)
       res.json({
         code: 0,
         message: '取消关注成功',
@@ -177,6 +187,25 @@ exports.updateUser = async (req, res) => {
       code: 0,
       message: '用户信息修改成功',
       data: user
+    })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+// 上传图片
+exports.uploadImage = async (req, res) => {
+  try {
+    const {fileName, formData} = req.body
+    axios.post(`https://api.imgbb.com/1/upload?name=${fileName}&key=bca48a62e1fd90fb1922e832723a02f2`, formData)
+      .then((response) => {
+        res.json({
+          code: 0,
+          message: '上传成功',
+          data: response.data
+        })
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message })
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
