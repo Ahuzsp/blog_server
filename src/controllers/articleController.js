@@ -6,11 +6,12 @@ const Follow = require('../models/follow')
 exports.getArticles = async (req, res) => {
   try {
     const query = req.query
-    const users = await Article.find(query)
+    const articles = await Article.find(query)
+
     res.json({
       code: 0,
       message: '查询成功',
-      data: users
+      data: articles
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -91,7 +92,9 @@ exports.collectOrLikeArticle = async (req, res) => {
     const model = type === 'collect' ? Collect : Like
 
     const actionLabel = type === 'collect' ? '收藏' : '点赞'
+    const actionKey = type === 'collect' ? 'collectCount' : 'likeCount'
     const existingDoc = await model.findOne({ userId, articleId })
+    const articleDoc = await Article.findOne({ articleId })
     if (existingDoc && isAction) {
       res.status(200).json({
         code: -1,
@@ -112,6 +115,11 @@ exports.collectOrLikeArticle = async (req, res) => {
           createTime: new Date().toLocaleString().replace(/\//g, '-')
         })
         await doc.save()
+        // 更新文章的收藏数
+        await Article.updateOne(
+          { articleId },
+          { [actionKey]: articleDoc[actionKey] + 1 }
+        )
         res.status(200).json({
           code: 0,
           message: `${actionLabel}成功`,
@@ -119,6 +127,13 @@ exports.collectOrLikeArticle = async (req, res) => {
         })
       } else {
         await model.findByIdAndDelete(existingDoc._id)
+        // 更新文章的收藏数
+        if (articleDoc[actionKey] - 1 > 0) {
+          await Article.updateOne(
+            { articleId },
+            { [actionKey]: articleDoc[actionKey] - 1 }
+          )
+        }
         res.status(200).json({
           code: 0,
           message: `取消${actionLabel}成功`,
