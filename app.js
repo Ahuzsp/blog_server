@@ -1,45 +1,31 @@
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./src/config/db.js');
-const userRoutes = require('./src/routes/userRoutes.js');
-const articleRoutes = require('./src/routes/articleRoutes.js');
-const logRoutes = require('./src/routes/logRoutes.js');
-require('dotenv').config();
+const express = require('express')
+const cors = require('cors')
+const connectDB = require('./src/config/db.js')
+const userRoutes = require('./src/routes/userRoutes.js')
+const articleRoutes = require('./src/routes/articleRoutes.js')
+const logRoutes = require('./src/routes/logRoutes.js')
+const uploadRoutes = require('./src/routes/uploadRoutes.js')
+require('dotenv').config()
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-const { uploadToImgBB } = require('./src/controllers/uploadService.js');
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
-const app = express();
+const app = express()
 // 使用 cors 中间件
-app.use(cors());
+app.use(cors())
 // Connect to database
-connectDB();
+connectDB()
 
 // Middleware
-app.use(express.json());
+app.use(express.json())
 
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/articles', articleRoutes);
-app.use('/api/logs', logRoutes);
-app.post('/upload', upload.single('file'), async (req, res) => {
-  const file = req.file;
-  const fileName = file.originalname;
-
-  try {
-      const result = await uploadToImgBB(file.path, fileName);
-      res.status(200).json({
-        code: 0,
-        message: `图片上传成功`,
-        data: result.data
-      })
-  } catch (error) {
-      res.status(500).json({ error: error.message });
-  }
-});
-const PORT = process.env.PORT || 8000;
+app.use('/api/users', userRoutes)
+app.use('/api/articles', articleRoutes)
+app.use('/api/logs', logRoutes)
+app.use('/upload', upload.single('file'), uploadRoutes)
+const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  console.log(`Server is running on port ${PORT}`)
+})
 module.exports = app
