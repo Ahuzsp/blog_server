@@ -8,7 +8,8 @@ const uploadRoutes = require('./src/routes/uploadRoutes.js')
 require('dotenv').config()
 
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+// 这里必须加/tmp,要不然线上会报错
+const upload = multer({ dest: '/tmp/uploads/' })
 
 const app = express()
 // 使用 cors 中间件
