@@ -17,7 +17,7 @@
 	},
 	"prettier": {
 		"semi": false, // 格式化时不加分号
-		// "singleQuote": true, // 格式化时使用单引号
+		"singleQuote": true, // 格式化时使用单引号
 		"trailingComma": "none" // 格式化时末尾不添加逗号
 	},
 	"security.workspace.trust.untrustedFiles": "open",
