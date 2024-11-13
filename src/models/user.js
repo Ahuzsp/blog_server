@@ -1,9 +1,5 @@
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose)
-const defaultAvatars = [
-  'https://i.ibb.co/nL4JPtw/dog.jpg',
-  'https://i.ibb.co/4Jhg4kY/v2-1e38bd1c8d1ed41223c96c73cb899cd8-r.jpg'
-]
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,11 +17,14 @@ const userSchema = new mongoose.Schema(
     },
     authorAvatar: {
       type: String,
-      default: defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)]
+      required: false
     },
     createTime: {
       type: String,
-      default: new Date().toLocaleString().replace(/\//g, '-'),
+      required: true
+    },
+    updateTime: {
+      type: String,
       required: true
     }
   },

@@ -42,11 +42,14 @@ exports.createUser = async (req, res) => {
         message: '用户名已存在'
       })
     }
-
+    const createTime = new Date().toLocaleString().replace(/\//g, '-')
+    const updateTime = new Date().toLocaleString().replace(/\//g, '-')
     // 创建新的用户对象
     const user = new User({
       username,
-      password
+      password,
+      createTime,
+      updateTime
     })
 
     const newUser = await user.save()
@@ -182,6 +185,7 @@ exports.updateUser = async (req, res) => {
         user[key] = req.body[key]
       }
     })
+    user.updateTime = new Date().toLocaleString().replace(/\//g, '-')
     await user.save()
     res.json({
       code: 0,
@@ -195,8 +199,12 @@ exports.updateUser = async (req, res) => {
 // 上传图片
 exports.uploadImage = async (req, res) => {
   try {
-    const {fileName, formData} = req.body
-    axios.post(`https://api.imgbb.com/1/upload?name=${fileName}&key=bca48a62e1fd90fb1922e832723a02f2`, formData)
+    const { fileName, formData } = req.body
+    axios
+      .post(
+        `https://api.imgbb.com/1/upload?name=${fileName}&key=bca48a62e1fd90fb1922e832723a02f2`,
+        formData
+      )
       .then((response) => {
         res.json({
           code: 0,
@@ -206,7 +214,7 @@ exports.uploadImage = async (req, res) => {
       })
       .catch((error) => {
         res.status(500).json({ message: error.message })
-    })
+      })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

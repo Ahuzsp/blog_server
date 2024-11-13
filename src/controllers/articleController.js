@@ -55,7 +55,9 @@ exports.getArticleDetailById = async (req, res) => {
 }
 exports.createArticle = async (req, res) => {
   // 创建新的文章对象
-  const article = new Article(req.body)
+  const createTime = new Date().toLocaleString().replace(/\//g, '-')
+  const updateTime = new Date().toLocaleString().replace(/\//g, '-')
+  const article = new Article({ ...req.body, createTime, updateTime })
 
   try {
     const newArticle = await article.save()

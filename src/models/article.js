@@ -16,7 +16,10 @@ const articleSchema = new mongoose.Schema(
     },
     createTime: {
       type: String,
-      default: new Date().toLocaleString().replace(/\//g, '-'),
+      required: true
+    },
+    updateTime: {
+      type: String,
       required: true
     },
     readCount: {
@@ -47,7 +50,7 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    htmlContent: {
+    mdValue: {
       type: String,
       required: true
     },
