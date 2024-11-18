@@ -6,10 +6,6 @@ const articleSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    username: {
-      type: String,
-      required: true
-    },
     articleTitle: {
       type: String,
       required: true

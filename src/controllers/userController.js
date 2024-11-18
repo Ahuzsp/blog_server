@@ -49,7 +49,9 @@ exports.createUser = async (req, res) => {
       username,
       password,
       createTime,
-      updateTime
+      updateTime,
+      authorAvatar: 'https://i.ibb.co/PgRxm1c/image-png.png',
+      abstract: '这个人很懒，什么都没留下'
     })
 
     const newUser = await user.save()
