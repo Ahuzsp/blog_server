@@ -5,6 +5,7 @@ const userRoutes = require('./src/routes/userRoutes.js')
 const articleRoutes = require('./src/routes/articleRoutes.js')
 const logRoutes = require('./src/routes/logRoutes.js')
 const uploadRoutes = require('./src/routes/uploadRoutes.js')
+const commentRoutes = require('./src/routes/commentRoutes.js')
 require('dotenv').config()
 
 const multer = require('multer')
@@ -24,6 +25,7 @@ app.use(express.json())
 app.use('/api/users', userRoutes)
 app.use('/api/articles', articleRoutes)
 app.use('/api/logs', logRoutes)
+app.use('/api/comments', commentRoutes)
 app.use('/upload', upload.single('file'), uploadRoutes)
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
