@@ -42,8 +42,8 @@ exports.createUser = async (req, res) => {
         message: '用户名已存在'
       })
     }
-    const createTime = new Date().toLocaleString().replace(/\//g, '-')
-    const updateTime = new Date().toLocaleString().replace(/\//g, '-')
+    const createTime = new Date().toLocaleString('zh-CN').replace(/\//g, '-')
+    const updateTime = new Date().toLocaleString('zh-CN').replace(/\//g, '-')
     // 创建新的用户对象
     const user = new User({
       username,
@@ -113,7 +113,7 @@ exports.followUser = async (req, res) => {
       const doc = new Follow({
         userId,
         followUserId,
-        createTime: new Date().toLocaleString().replace(/\//g, '-')
+        createTime: new Date().toLocaleString('zh-CN').replace(/\//g, '-')
       })
       await doc.save()
       res.json({
@@ -187,7 +187,7 @@ exports.updateUser = async (req, res) => {
         user[key] = req.body[key]
       }
     })
-    user.updateTime = new Date().toLocaleString().replace(/\//g, '-')
+    user.updateTime = new Date().toLocaleString('zh-CN').replace(/\//g, '-')
     await user.save()
     res.json({
       code: 0,

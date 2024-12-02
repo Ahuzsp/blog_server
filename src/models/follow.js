@@ -12,7 +12,6 @@ const followSchema = new mongoose.Schema(
     },
     createTime: {
       type: String,
-      default: new Date().toLocaleString().replace(/\//g, '-'),
       required: true
     }
   },

@@ -81,7 +81,7 @@ exports.getCommentsByArticleId = async (req, res) => {
 exports.createComment = async (req, res) => {
   try {
     const { articleId } = req.body
-    const createTime = new Date().toLocaleString().replace(/\//g, '-')
+    const createTime = new Date().toLocaleString('zh-CN').replace(/\//g, '-')
     const comment = new commentModel({
       ...req.body,
       createTime,
