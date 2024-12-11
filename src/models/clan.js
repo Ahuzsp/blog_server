@@ -26,15 +26,20 @@ const clanSchema = new mongoose.Schema(
       type: String,
       required: false
     },
-    deceased: {
-      type: Boolean,
-      required: false
+    isDeceased: {
+      type: Number,
+      required: false,
+      default: 0
     },
     graveAddress: {
       type: String,
       required: false
     },
     briefIntroduction: {
+      type: String,
+      required: false
+    },
+    graveImg: {
       type: String,
       required: false
     },
