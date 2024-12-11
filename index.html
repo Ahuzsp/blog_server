@@ -16,7 +16,7 @@
 
     <script>
       document.getElementById('query').addEventListener('click', () => {
-        fetch('http://localhost:8000/api/users/getUsers', {
+        fetch('http://localhost:1027/api/users/getUsers', {
           method: 'get',
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -26,7 +26,7 @@
           .catch((err) => console.log(err))
       })
       document.getElementById('btn').addEventListener('click', () => {
-        fetch('http://localhost:8000/api/users/createUser', {
+        fetch('http://localhost:1027/api/users/createUser', {
           method: 'post',
           body: JSON.stringify({
             username: 'username3',
@@ -47,7 +47,7 @@
             password: `password${i + 1}`
           })
         }
-        fetch('http://localhost:8000/api/users/createUserBatch', {
+        fetch('http://localhost:1027/api/users/createUserBatch', {
           method: 'post',
           body: JSON.stringify({ userList }),
           headers: {
@@ -58,7 +58,7 @@
           .catch((err) => console.log(err))
       })
       document.getElementById('artQuery').addEventListener('click', () => {
-        fetch('http://localhost:8000/api/articles/getArticles', {
+        fetch('http://localhost:1027/api/articles/getArticles', {
           method: 'get',
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -68,7 +68,7 @@
           .catch((err) => console.log(err))
       })
       document.getElementById('addQuery').addEventListener('click', () => {
-        fetch('http://localhost:8000/api/articles/createArticle', {
+        fetch('http://localhost:1027/api/articles/createArticle', {
           method: 'post',
           body: JSON.stringify({
             userId: 1,

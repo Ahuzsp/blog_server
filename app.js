@@ -29,8 +29,8 @@ app.use('/api/logs', logRoutes)
 app.use('/api/comments', commentRoutes)
 app.use('/api/clan', clanRoutes)
 app.use('/upload', upload.single('file'), uploadRoutes)
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 1027
 app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`)
+  console.log(`Server is running on port ${PORT}`)
 })
 module.exports = app
