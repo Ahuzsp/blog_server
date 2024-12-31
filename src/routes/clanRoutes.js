@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const clanRoutes = require('../controllers/clanController')
+const clanController = require('../controllers/clanController')
 
-router.get('/getClanMembers', clanRoutes.getClanMembers)
-router.post('/updateClanMember', clanRoutes.updateClanMember)
-router.post('/createClanMember', clanRoutes.createClanMember)
-router.post('/batchCreateMembers', clanRoutes.batchCreateMembers)
+router.get('/getClanMembers', clanController.getClanMembers)
+router.post('/updateClanMember', clanController.updateClanMember)
+router.post('/createClanMember', clanController.createClanMember)
+router.post('/batchCreateMembers', clanController.batchCreateMembers)
 
 module.exports = router
