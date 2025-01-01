@@ -30,7 +30,7 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-	const { username, password, abstract } = req.body
+	const { username, password, abstract, phone } = req.body
 
 	try {
 		// 检查用户名是否已存在
@@ -48,6 +48,7 @@ exports.createUser = async (req, res) => {
 		const user = new User({
 			username,
 			password,
+			phone,
 			createTime,
 			updateTime,
 			authorAvatar: 'https://i.ibb.co/PgRxm1c/image-png.png',
