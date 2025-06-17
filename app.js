@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const connectDB = require('./src/config/db.js')
+// const connectDB = require('./src/config/db.js')
+const connectDB = require('./src/config/mysqlDb.js')
 const userRoutes = require('./src/routes/userRoutes.js')
 const articleRoutes = require('./src/routes/articleRoutes.js')
 const logRoutes = require('./src/routes/logRoutes.js')
