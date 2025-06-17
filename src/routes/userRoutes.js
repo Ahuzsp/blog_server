@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/userController')
-
-router.post('/login', userController.login)
-router.get('/getUsers', userController.getUsers)
-router.post('/createUser', userController.createUser)
+const userControllerMySql = require('../controllers/userControllerMySql')
+router.post('/login', userControllerMySql.login)
+router.get('/getUsers', userControllerMySql.getUsers)
+router.post('/createUser', userControllerMySql.createUser)
 router.post('/createUserBatch', userController.createUserBatch)
 // 关注用户
 router.post('/followUser', userController.followUser)
